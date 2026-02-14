@@ -180,22 +180,23 @@ const MapPage = () => {
           {/* جدول البيانات */}
           <div style={{
             backgroundColor: theme === "dark" ? "#2a2a2a" : "#f0f0f0",
-            padding: "8px",
+            padding: isMobile ? "6px" : "8px",
             borderRadius: "6px",
-            marginBottom: "10px"
+            marginBottom: isMobile ? "8px" : "10px"
           }}>
-            <h3 style={{ color: "#b69767", marginBottom: "8px", marginTop: "5px", fontSize: isMobile ? "12px" : "16px" }}>بيانات</h3>
-            <div style={{ overflowX: "auto", fontSize: isMobile ? "8px" : "11px", maxHeight: isMobile ? "100px" : "auto" }}>
+            <h3 style={{ color: "#b69767", marginBottom: isMobile ? "6px" : "8px", marginTop: "3px", fontSize: isMobile ? "11px" : "16px", whiteSpace: "nowrap" }}>بيانات</h3>
+            <div style={{ overflowX: "auto", fontSize: isMobile ? "9px" : "11px", maxHeight: isMobile ? "120px" : "auto", WebkitOverflowScrolling: "touch" }}>
               <table style={{
                 width: "100%",
                 borderCollapse: "collapse",
-                direction: "rtl"
+                direction: "rtl",
+                minWidth: isMobile ? "200px" : "auto"
               }}>
                 <thead>
                   <tr style={{ backgroundColor: theme === "dark" ? "#1a1a1a" : "#e8e8e8", borderBottom: "2px solid #b69767" }}>
-                    <th style={{ padding: isMobile ? "4px" : "8px", textAlign: "right", color: "#b69767", fontWeight: "700" }}>المحافظة</th>
-                    <th style={{ padding: isMobile ? "4px" : "8px", textAlign: "right", color: "#b69767", fontWeight: "700" }}>مراكز</th>
-                    <th style={{ padding: isMobile ? "4px" : "8px", textAlign: "right", color: "#b69767", fontWeight: "700" }}>الفجوة</th>
+                    <th style={{ padding: isMobile ? "5px" : "8px", textAlign: "right", color: "#b69767", fontWeight: "700", fontSize: isMobile ? "9px" : "inherit" }}>المحافظة</th>
+                    <th style={{ padding: isMobile ? "5px" : "8px", textAlign: "center", color: "#b69767", fontWeight: "700", fontSize: isMobile ? "9px" : "inherit" }}>مراكز</th>
+                    <th style={{ padding: isMobile ? "5px" : "8px", textAlign: "center", color: "#b69767", fontWeight: "700", fontSize: isMobile ? "9px" : "inherit" }}>الفجوة</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -209,9 +210,9 @@ const MapPage = () => {
                     { city: "الحناكية", centers: 0, gap: "100%" }
                   ].map((row, idx) => (
                     <tr key={idx} style={{ borderBottom: `1px solid ${theme === "dark" ? "#3a3a3a" : "#ddd"}` }}>
-                      <td style={{ padding: isMobile ? "3px" : "6px", textAlign: "right", color: theme === "dark" ? "#ddd" : "#333", fontSize: isMobile ? "9px" : "inherit" }}>{row.city}</td>
-                      <td style={{ padding: isMobile ? "3px" : "6px", textAlign: "center", color: "#b69767", fontWeight: "600", fontSize: isMobile ? "9px" : "inherit" }}>{row.centers}</td>
-                      <td style={{ padding: isMobile ? "3px" : "6px", textAlign: "center", color: "#b69767", fontWeight: "600", fontSize: isMobile ? "9px" : "inherit" }}>{row.gap}</td>
+                      <td style={{ padding: isMobile ? "4px" : "6px", textAlign: "right", color: theme === "dark" ? "#ddd" : "#333", fontSize: isMobile ? "9px" : "inherit", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{isMobile ? row.city.substring(0, 10) : row.city}</td>
+                      <td style={{ padding: isMobile ? "4px" : "6px", textAlign: "center", color: "#b69767", fontWeight: "600", fontSize: isMobile ? "9px" : "inherit" }}>{row.centers}</td>
+                      <td style={{ padding: isMobile ? "4px" : "6px", textAlign: "center", color: "#b69767", fontWeight: "600", fontSize: isMobile ? "9px" : "inherit" }}>{row.gap}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -224,23 +225,24 @@ const MapPage = () => {
           {/* البيانات السكانية - Combo Chart */}
           <div style={{
             backgroundColor: theme === "dark" ? "#2a2a2a" : "#f0f0f0",
-            padding: "8px",
+            padding: isMobile ? "6px" : "8px",
             borderRadius: "6px",
-            marginBottom: "10px",
+            marginBottom: isMobile ? "8px" : "10px",
             display: isMobile ? "none" : "block"
           }}>
-            <h3 style={{ color: "#b69767", marginBottom: "8px", marginTop: "5px", fontSize: isMobile ? "12px" : "16px", textAlign: "center" }}>إحصائيات السكان</h3>
+            <h3 style={{ color: "#b69767", marginBottom: isMobile ? "6px" : "8px", marginTop: "3px", fontSize: isMobile ? "11px" : "16px", textAlign: "center", whiteSpace: "nowrap" }}>إحصائيات السكان</h3>
             
             {/* Combo Chart - Bars + Lines */}
-            <div style={{ direction: "rtl", textAlign: "center", position: "relative" }}>
+            <div style={{ direction: "rtl", textAlign: "center", position: "relative", overflow: "hidden" }}>
               <svg
                 width="100%"
-                height={isMobile ? 150 : 350}
+                height={isMobile ? 120 : 350}
                 viewBox="0 0 900 350"
                 style={{
-                  minHeight: isMobile ? "150px" : "350px",
+                  minHeight: isMobile ? "120px" : "350px",
                   backgroundColor: theme === "dark" ? "#1a1a1a" : "#fafafa",
-                  borderRadius: "6px"
+                  borderRadius: "6px",
+                  transition: "all 0.3s ease"
                 }}
               >
                 {/* خطوط الشبكة الأفقية */}
@@ -278,7 +280,7 @@ const MapPage = () => {
                       x="-5"
                       y={308 - (i * 50)}
                       textAnchor="end"
-                      fontSize="14"
+                      fontSize={isMobile ? "10" : "14"}
                       fontWeight="700"
                       fill="#b69767"
                     >
@@ -294,7 +296,7 @@ const MapPage = () => {
                     x={70 + i * 130}
                     y="320"
                     textAnchor="middle"
-                    fontSize="12"
+                    fontSize={isMobile ? "9" : "12"}
                     fontWeight="600"
                     fill={theme === "dark" ? "#ddd" : "#333"}
                   >
@@ -395,20 +397,20 @@ const MapPage = () => {
             <div style={{
               display: "flex",
               justifyContent: "center",
-              gap: "15px",
-              marginTop: "12px",
-              padding: "8px",
+              gap: isMobile ? "10px" : "15px",
+              marginTop: isMobile ? "8px" : "12px",
+              padding: isMobile ? "6px" : "8px",
               backgroundColor: theme === "dark" ? "#1a1a1a" : "#f5f5f5",
               borderRadius: "4px",
               flexWrap: "wrap"
             }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", direction: "rtl" }}>
-                <div style={{ width: "20px", height: "3px", backgroundColor: "#e74c3c" }} />
-                <span style={{ fontSize: isMobile ? "11px" : "16px", fontWeight: "700" }}>السكان</span>
+              <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "5px" : "8px", direction: "rtl" }}>
+                <div style={{ width: isMobile ? "12px" : "20px", height: "2px", backgroundColor: "#e74c3c" }} />
+                <span style={{ fontSize: isMobile ? "9px" : "16px", fontWeight: "700", whiteSpace: "nowrap" }}>السكان</span>
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", direction: "rtl" }}>
-                <div style={{ width: "20px", height: "3px", backgroundColor: "#27ae60" }} />
-                <span style={{ fontSize: isMobile ? "11px" : "16px", fontWeight: "700" }}>الزيادة</span>
+              <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "5px" : "8px", direction: "rtl" }}>
+                <div style={{ width: isMobile ? "12px" : "20px", height: "2px", backgroundColor: "#27ae60" }} />
+                <span style={{ fontSize: isMobile ? "9px" : "16px", fontWeight: "700", whiteSpace: "nowrap" }}>الزيادة</span>
               </div>
             </div>
           </div>
