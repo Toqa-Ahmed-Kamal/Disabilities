@@ -1,11 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./ContactFooter.css";
-import footerLogo from "../../../assets/Footer/Logo.png";
-import icon1 from "../../../assets/Footer/Icon (1).png";
-import icon2 from "../../../assets/Footer/Icon (2).png";
-import icon3 from "../../../assets/Footer/Icon (3).png";
-import icon4 from "../../../assets/Footer/Icon (4).png";
 
 const ContactFooter = () => {
   return (

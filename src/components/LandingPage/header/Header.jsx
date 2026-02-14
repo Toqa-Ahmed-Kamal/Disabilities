@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import { useTheme } from "../../../context/ThemeContext";
+import logoDarkMode from "../../../assets/HeaderAndLogo/Logo Dark mode.png";
+import logoLightMode from "../../../assets/HeaderAndLogo/Logo light mode.png";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -16,17 +18,10 @@ const Header = () => {
     <div className="header-wrapper">
       <div className="logos-section">
         <img
-          src={
-            theme === "dark"
-              ? "/src/assets/HeaderAndLogo/Logo Dark mode.png"
-              : "/src/assets/HeaderAndLogo/Logo Light mode.png"
-          }
+          src={theme === "dark" ? logoDarkMode : logoLightMode}
           alt="Vision Logo"
           className="header-logo"
           onClick={() => navigate("/")}
-          onError={(e) => {
-            e.target.src = "/src/assets/HeaderAndLogo/Logo Dark mode.png";
-          }}
         />
       </div>
 

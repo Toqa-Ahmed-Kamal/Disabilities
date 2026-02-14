@@ -1,6 +1,7 @@
 import { useEffect, useRef, forwardRef, useImperativeHandle, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+import "./MapView.css";
 import ChartsSection from "./ChartsSection";
 
 const MapView = forwardRef(function MapView({ 
@@ -226,26 +227,15 @@ useImperativeHandle(ref, () => {
 
 
   return (
-    <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column" }}>
-      <div style={{ display: "flex", height: "65%", position: "relative" }}>
+    <div className="map-view-container">
+      <div className="map-view-top">
         <div
           ref={mapContainer}
-          style={{
-            width: "100%",
-            height: "100%",
-            position: "relative",
-            zIndex: 1,
-          }}
+          className="map-container"
         />
-
-
-
-
       </div>
 
-  
-
-      <div style={{ height: "35%" }}>
+      <div className="map-view-bottom">
         <ChartsSection theme={theme} />
       </div>
     </div>

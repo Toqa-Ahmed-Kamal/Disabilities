@@ -1,10 +1,11 @@
 import React from "react";
 import "./SectionDivider.css";
+import artImage from "../../../assets/InfoMap/Art.png";
 
 const SectionDivider = () => {
   return (
     <div className="section-divider-container">
-      <img src="/src/assets/InfoMap/Art.png" alt="" />
+      <img src={artImage} alt="" />
     </div>
   );
 };
