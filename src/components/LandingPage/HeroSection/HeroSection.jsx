@@ -10,7 +10,7 @@ const HeroSection = () => {
       <div className="vision-container">
         <div className="vision-box" onClick={() => navigate("/map")}>
           <h2 className="vision-title">
-            رؤية <br /> المشروع
+            رؤية <br /> المبادرة
           </h2>
           <span className="arrow-icon" style={{ transform: "revert" }}>
             ➤

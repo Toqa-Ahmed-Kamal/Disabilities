@@ -38,7 +38,7 @@ const Header = () => {
             لوحة التحكم
           </a>
           <a onClick={() => { navigate("/map-page"); setMenuOpen(false); }}>
-            خريطة المدينة
+        خريطة المدينة المنورة
           </a>
           <a onClick={() => { navigate("/contact"); setMenuOpen(false); }}>
             تواصل معنا

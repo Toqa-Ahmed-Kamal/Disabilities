@@ -34,10 +34,10 @@ const FieldGallery = () => {
         {/* الاسم */}
         <div style={{ marginBottom: "50px", textAlign: "center", paddingBottom: "20px", borderBottom: "2px solid #b69767" }}>
           <h2 style={{ color: "#b69767", fontSize: "32px", marginBottom: "5px", fontWeight: "800" }}>
-            شــــــذى ســــــالـــم
+            شــــــذى ســــــالـــم الهلالي
           </h2>
           <p style={{ color: "#b69767", fontSize: "18px", fontWeight: "600", margin: 0 }}>
-            الاهلــــــــــــــــاليل
+           
           </p>
         </div>
 

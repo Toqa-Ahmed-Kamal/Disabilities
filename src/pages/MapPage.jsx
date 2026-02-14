@@ -149,7 +149,8 @@ const MapPage = () => {
           ← {isMobile ? "رجوع" : "الرجوع"}
         </button>
         <h1 style={{ color: theme === "dark" ? "#fff" : "#000", margin: 0, fontSize: isMobile ? "14px" : isCompact ? "15px" : "18px" }}>
-        خريطة المدينة
+           خريطة المدينة المنورة
+
         </h1>
         <div style={{ width: isMobile ? "50px" : "80px" }}></div>
       </header>

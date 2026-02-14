@@ -46,7 +46,7 @@ function RightSidebar({ mapRef, onZoom, onZoomAll, onRockyZoneZoom, theme }) {
   };
 
   useEffect(() => {
-    // قراءة بيانات المناطق من Disabilities.json
+    // قراءة بيانات الالمناطق الادارية من Disabilities.json
     const fetchRockyZones = async () => {
       try {
         const response = await fetch("/Disabilities.json");
@@ -127,7 +127,7 @@ function RightSidebar({ mapRef, onZoom, onZoomAll, onRockyZoneZoom, theme }) {
       <div style={{ marginBottom: "20px" }}>
      
         <div style={filterCard}>
-          <label style={labelStyle}>مناطق صخرية</label>
+          <label style={labelStyle}>المناطق الادارية</label>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {/* الكل checkbox */}
             <label
@@ -198,8 +198,7 @@ function RightSidebar({ mapRef, onZoom, onZoomAll, onRockyZoneZoom, theme }) {
         borderRadius: 8, 
         border: theme === "dark" ? "1px solid rgba(255,255,255,0.1)" : "1px solid #dcdcdc", 
       }}>
-<h4 style={{ marginTop: 0, marginBottom: 10, fontSize: 12, fontWeight: 600, color: theme === "dark" ? "#eaeaea" : "#111111", textAlign: 'center', lineHeight: '1.6' }}>  نسبة السكان السعوديين من ذوي الإعاقة وسنسية المستفيدين من خدمات الوزارة بشكل إجمالي:</h4>        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-          <div style={{ width: '100%' }}>
+<h4 style={{ marginTop: 0, marginBottom: 10, fontSize: 12, fontWeight: 600, color: theme === "dark" ? "#eaeaea" : "#111111", textAlign: 'center', lineHeight: '1.6' }}>  نسبة السكان السعوديين من ذوي الإعاقة المستفيدين من خدمات الوزارة بشكل إجمالي:</h4>        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>          <div style={{ width: '100%' }}>
             <PieChart 
               data={{ 'معاق': 65, 'مستفيد': 35 }} 
               colors={['#ffc107', '#666666']}
