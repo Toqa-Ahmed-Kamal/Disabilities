@@ -1,0 +1,188 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "هنايف",
+        "address": "مخطط الملك فهد",
+        "capacity": 40,
+        "beneficiaries": 25,
+        "coverage": "0.03%",
+        "sector_type": "خاص",
+        "center_type": "مراكز الرعاية النهارية للإناث"
+      },
+      "geometry": { "type": "Point", "coordinates": [39.6845855, 24.495448087696573] }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "طيبة التخصصي",
+        "address": "الدائري الثاني",
+        "capacity": 49,
+        "beneficiaries": 49,
+        "coverage": "0.04%",
+        "sector_type": "خاص",
+        "center_type": "مراكز الرعاية النهارية للإناث"
+      },
+      "geometry": { "type": "Point", "coordinates": [39.665996855819095, 24.44291066158527] }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "غادة للتوحد",
+        "address": "شوران",
+        "capacity": 60,
+        "beneficiaries": 63,
+        "coverage": "0.09%",
+        "sector_type": "خاص",
+        "center_type": "مراكز الرعاية النهارية للإناث"
+      },
+      "geometry": { "type": "Point", "coordinates": [39.65351555767235, 24.41288870691968] }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "خطوات للتأهيل",
+        "address": "سلطانة",
+        "capacity": 86,
+        "beneficiaries": 138,
+        "coverage": "0.13%",
+        "sector_type": "خاص",
+        "center_type": "مراكز الرعاية النهارية للإناث"
+      },
+      "geometry": { "type": "Point", "coordinates": [39.57001247116382, 24.47987962770661] }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "شعاع الأمل",
+        "address": "المطار",
+        "capacity": 96,
+        "beneficiaries": 72,
+        "coverage": "0.07%",
+        "sector_type": "خاص",
+        "center_type": "مراكز الرعاية النهارية للإناث"
+      },
+      "geometry": { "type": "Point", "coordinates": [39.68508212883617, 24.53694217963939] }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "إعادة أمل",
+        "address": "مخطط الأمير نايف",
+        "capacity": 105,
+        "beneficiaries": 105,
+        "coverage": "0.09%",
+        "sector_type": "خاص",
+        "center_type": "مراكز الرعاية النهارية للإناث"
+      },
+      "geometry": { "type": "Point", "coordinates": [39.60619514232762, 24.379788873303802] }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "إرادة طفل",
+        "address": "مخطط الملك فهد",
+        "capacity": 126,
+        "beneficiaries": 79,
+        "coverage": "0.09%",
+        "sector_type": "خاص",
+        "center_type": "مراكز الرعاية النهارية للإناث"
+      },
+      "geometry": { "type": "Point", "coordinates": [39.681585384655286, 24.520082799698958] }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "جمعية تعافي",
+        "address": "ينبع (حي السديس)",
+        "capacity": 155,
+        "beneficiaries": 129,
+        "coverage": "0.12%",
+        "sector_type": "خاص",
+        "center_type": "مراكز الرعاية النهارية للإناث"
+      },
+      "geometry": { "type": "Point", "coordinates": [38.20094468465528, 24.00816121431048] }
+    },
+
+    { "type": "Feature", "properties": { "name": "جمعية الأطفال ذوي الإعاقة - مركز الأمير سلطان" }, "geometry": { "type": "Point", "coordinates": [39.67913042883618, 24.511616709895065] } },
+    { "type": "Feature", "properties": { "name": "جمعية المدينة لمتلازمة داون" }, "geometry": { "type": "Point", "coordinates": [39.57762918650853, 24.4970345058657] } },
+    { "type": "Feature", "properties": { "name": "جمعية المدينة للتوحد تمكن" }, "geometry": { "type": "Point", "coordinates": [39.49370931349146, 24.4275850109191] } },
+    { "type": "Feature", "properties": { "name": "جمعية المكفوفين رؤية" }, "geometry": { "type": "Point", "coordinates": [39.66066604232764, 24.463444336502864] } },
+    { "type": "Feature", "properties": { "name": "جمعية اصدقاء التوحد معك" }, "geometry": { "type": "Point", "coordinates": [39.61970401349146, 24.420340995671296] } },
+    { "type": "Feature", "properties": { "name": "جمعية الحرمين للإعاقة الحركية" }, "geometry": { "type": "Point", "coordinates": [39.66263555767235, 24.453788878721063] } },
+    { "type": "Feature", "properties": { "name": "جمعية جنا لتأهيل الفتيات" }, "geometry": { "type": "Point", "coordinates": [39.58311891534472, 24.49477232425388] } },
+    { "type": "Feature", "properties": { "name": "جمعية المكفوفين بينبع خطوة" }, "geometry": { "type": "Point", "coordinates": [38.084323269310566, 24.105000749513415] } },
+    { "type": "Feature", "properties": { "name": "جمعيه رضوى النسائيه" }, "geometry": { "type": "Point", "coordinates": [38.037549671163816, 24.08791214846855] } },
+    { "type": "Feature", "properties": { "name": "مركز التأهيل الشامل" }, "geometry": { "type": "Point", "coordinates": [39.655032955819095, 24.427089464956573] } },
+    { "type": "Feature", "properties": { "name": "جمعية علا لذوي الإعاقة" }, "geometry": { "type": "Point", "coordinates": [37.92749392883618, 26.607582655817556] } },
+    { "type": "Feature", "properties": { "name": "جمعية البر بالفريش" }, "geometry": { "type": "Point", "coordinates": [39.524888815344724, 24.462871499974224] } },
+    { "type": "Feature", "properties": { "name": "جمعيه البر بالعمق" }, "geometry": { "type": "Point", "coordinates": [40.98329475767236, 23.95160097700005] } },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "جمعية الأطفال ذوي الإعاقة",
+        "gender_served": "إناث/ذكور 12-",
+        "address": "الدويخلة",
+        "capacity": 250,
+        "market_share": "0.18%",
+        "sector_type": "غير ربحي",
+        "center_type": "جمعيات محولة"
+      },
+      "geometry": { "type": "Point", "coordinates": [39.67913042883618, 24.511616709895065] }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "جمعية المدينة لمتلازمة داون",
+        "gender_served": "إناث/ذكور 12-",
+        "address": "سلطانة بئر عثمان",
+        "capacity": 100,
+        "market_share": "0.07%",
+        "sector_type": "غير ربحي",
+        "center_type": "جمعيات محولة"
+      },
+      "geometry": { "type": "Point", "coordinates": [39.57762918650853, 24.4970345058657] }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "جمعية المدينة للتوحد (مركز تمكن)",
+        "gender_served": "إناث/ذكور 12-",
+        "address": "الدعيثة",
+        "capacity": 1400,
+        "market_share": "1.05%",
+        "sector_type": "غير ربحي",
+        "center_type": "جمعيات محولة"
+      },
+      "geometry": { "type": "Point", "coordinates": [39.49370931349146, 24.4275850109191] }
+    },
+
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "جمعية المدينة للتوحد (مركز تمكن)",
+        "gender_served": "ذكور 12+",
+        "address": "الدعيثة",
+        "capacity": 1457,
+        "market_share": "1.09%",
+        "sector_type": "غير ربحي",
+        "center_type": "جمعيات محولة"
+      },
+      "geometry": { "type": "Point", "coordinates": [39.49370931349146, 24.4275850109191] }
+    }
+
+  ]
+}

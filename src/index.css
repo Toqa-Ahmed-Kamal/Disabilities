@@ -1,0 +1,206 @@
+/* ==================== Theme Variables ==================== */
+:root {
+  /* Default variables */
+  --bg-primary: #f5f5f5;
+  --bg-secondary: #f5f5f5;
+  --bg-card: #ffffff;
+  --bg-card-gradient: #f5f5f5;
+  --bg-input: #ffffff;
+  --bg-sidebar: #f5f5f5;
+  --text-primary: #111111;
+  --text-secondary: #555555;
+  --text-muted: #888888;
+  --border-color: #dcdcdc;
+  --border-light: #eeeeee;
+  --shadow-card: 0 1px 4px rgba(0,0,0,0.08);
+  --shadow-sidebar: none;
+  --chart-grid: #cccccc;
+  --chart-bar: #8884d8;
+  --chart-line: #8B4513;
+}
+  [data-theme="light"] {
+  --text-primary: #111111 !important;
+  --text-secondary: #555555 !important;
+  --text-muted: #888888 !important;
+  --bg-primary: #f5f5f5 !important;
+  --bg-secondary: #f5f5f5 !important;
+  --bg-card: #ffffff !important;
+  --bg-card-gradient: #f5f5f5 !important;
+  --bg-input: #ffffff !important;
+  --bg-sidebar: #f5f5f5 !important;
+  --border-color: #dcdcdc !important;
+  --border-light: #eeeeee !important;
+  --shadow-card: 0 1px 4px rgba(0,0,0,0.08) !important;
+  --shadow-sidebar: none !important;
+  --chart-grid: #cccccc !important;
+  --chart-bar: #8884d8 !important;
+  --chart-line: #8B4513 !important;
+}
+
+
+[data-theme="dark"] {
+  /* Dark Theme */
+  --bg-primary: #1a1a1a !important;
+  --bg-secondary: #1a1a1a !important;
+  --bg-card: #1a1a1a !important;
+  --bg-card-gradient: #1a1a1a !important;
+  --bg-input: #252525 !important;
+  --bg-sidebar: #1a1a1a !important;
+  --text-primary: #eaeaea !important;
+  --text-secondary: #dddddd !important;
+  --text-muted: #aaaaaa !important;
+  --border-color: rgba(255,255,255,0.1) !important;
+  --border-light: rgba(255,255,255,0.06) !important;
+  --shadow-card: 0 1px 8px rgba(0,0,0,0.35) !important;
+  --shadow-sidebar: none !important;
+  --chart-grid: #444444 !important;
+  --chart-bar: #8884d8 !important;
+  --chart-line: #8B4513 !important;
+}
+
+/* ==================== Base Styles ==================== */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  background-color: var(--bg-primary);
+  color: var(--text-primary) !important;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Force theme colors on all elements */
+* {
+  color: inherit;
+}
+
+h1, h2, h3, h4, h5, h6, p, div, span, label {
+  color: var(--text-primary) !important;
+}
+.navbar {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Moving shine */
+.navbar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 300%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.35),
+    rgba(255,255,255,0.08),
+    rgba(255,255,255,0.35)
+  );
+  animation: navbarShine 6s linear infinite;
+  pointer-events: none;
+}
+
+/* Animation */
+@keyframes navbarShine {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(50%);
+  }
+}
+
+/* ==================== Popup Styles ==================== */
+.maplibregl-popup.custom-popup {
+  max-width: 700px !important;
+}
+
+.maplibregl-popup.custom-popup .maplibregl-popup-content {
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 8px !important;
+  box-shadow: var(--shadow-card) !important;
+  padding: 12px !important;
+  max-width: 700px !important;
+  width: auto !important;
+}
+
+.maplibregl-popup.custom-popup .maplibregl-popup-close-button {
+  color: var(--text-primary) !important;
+  font-size: 18px !important;
+  right: 8px !important;
+  top: 8px !important;
+}
+
+.maplibregl-popup.custom-popup .maplibregl-popup-tip {
+  border-top-color: var(--bg-card) !important;
+}
+
+/* ==================== Enhanced Popup Styles ==================== */
+
+/* Enhanced popup animations and styling */
+.enhanced-popup .maplibregl-popup-content {
+  padding: 0 !important;
+  border-radius: 15px !important;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15) !important;
+  animation: popupSlideIn 0.3s ease-out !important;
+  max-width: 600px !important;
+  overflow: hidden !important;
+}
+
+.enhanced-popup .maplibregl-popup-tip {
+  border-top-color: var(--bg-card) !important;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)) !important;
+}
+
+.enhanced-popup .maplibregl-popup-close-button {
+  background: rgba(212, 175, 55, 0.8) !important;
+  color: white !important;
+  font-size: 18px !important;
+  right: 15px !important;
+  top: 15px !important;
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 50% !important;
+  border: none !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  z-index: 1000 !important;
+  transition: all 0.2s ease !important;
+}
+
+.enhanced-popup .maplibregl-popup-close-button:hover {
+  background: rgba(212, 175, 55, 1) !important;
+  transform: scale(1.1) !important;
+}
+
+/* Popup animation */
+@keyframes popupSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Responsive popup */
+@media (max-width: 768px) {
+  .enhanced-popup .maplibregl-popup-content {
+    max-width: 90vw !important;
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .enhanced-popup .maplibregl-popup-content {
+    max-width: 95vw !important;
+    font-size: 13px !important;
+  }
+}

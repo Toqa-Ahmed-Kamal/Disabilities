@@ -1,0 +1,159 @@
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background-image: url("/src/assets/Cover/Cover.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  box-shadow: 0 100px 20px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="light"] .hero-section {
+  box-shadow: none;
+}
+
+.vision-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-right: -2px;
+  z-index: 10;
+}
+
+.vision-box {
+  background-color: var(--main-gold);
+  color: #000;
+  border-radius: 250px 0 0 250px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  position: relative;
+  box-shadow: -15px 0 40px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    width 0.3s ease,
+    background-color 0.3s ease;
+  color: #000;
+  height: 500px;
+  width: 320px;
+  border-top-left-radius: 1000px 300%;
+  border-bottom-left-radius: 500px 100%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 0 40px 0 80px;
+}
+
+[data-theme="light"] .vision-box {
+  background-color: #b0946b;
+  box-shadow: -15px 0 40px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+}
+
+.vision-box:hover {
+  transform: translateX(-15px);
+  width: 370px; /* حركة توسيع بسيطة عند الهوفر */
+}
+
+.vision-title {
+  font-size: 2.8rem; /* كبرت الخط حاجة بسيطة */
+  font-weight: 800;
+  line-height: 1.1;
+  margin: 0;
+  font-family: "Alexandria", sans-serif;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+.arrow-icon {
+  font-size: 3.5rem; /* صغرت السهم عشان يكون متناسق مش ضخم جداً */
+  display: inline-block;
+  color: #000;
+  font-weight: bold;
+  transition: transform 0.3s ease;
+}
+
+.vision-box:hover .arrow-icon {
+  transform: translateX(-5px);
+}
+
+[data-theme="light"] .arrow-icon {
+  color: #ffffff;
+}
+
+@media (max-width: 1024px) {
+  .vision-box {
+    width: 300px;
+    padding: 0 30px 0 40px;
+  }
+
+  .vision-title {
+    font-size: 2.2rem;
+  }
+
+  .arrow-icon {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    height: 100vh;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .vision-container {
+    justify-content: center;
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 100%;
+    height: 55%; /* قللت الارتفاع شوية للموبايل */
+  }
+
+  .vision-box {
+    width: 100%;
+    height: 100%;
+    padding: 40px;
+    border-radius: 0;
+    /* الكيرف المعقد للموبايل زي ما هو */
+    clip-path: path(
+      "M 0 100 C 0 20, 100 0, 300 0 L 800 0 L 800 600 C 600 600, 200 550, 0 450 Z"
+    );
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none;
+    gap: 15px;
+  }
+
+  .vision-box:hover {
+    transform: none;
+    width: 100%;
+  }
+
+  .vision-title {
+    font-size: 3.5rem;
+    text-align: right;
+    color: #1f1f1f;
+    margin-left: 0;
+  }
+
+  .arrow-icon {
+    margin-right: 0;
+    font-size: 3rem;
+    color: #1f1f1f;
+  }
+
+  [data-theme="light"] .vision-title,
+  [data-theme="light"] .arrow-icon {
+    color: #ffffff;
+  }
+}
