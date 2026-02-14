@@ -49,11 +49,13 @@ const MapPage = () => {
   const navigate = useNavigate();
   const [selectedCenter, setSelectedCenter] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isCompact, setIsCompact] = useState(window.innerWidth <= 1366);
   const markersRef = useRef({});
 
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
+      setIsCompact(window.innerWidth <= 1366);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -119,7 +121,7 @@ const MapPage = () => {
     <div style={{ height: "100vh", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       {/* Header */}
       <header style={{
-        padding: isMobile ? "10px 12px" : "15px 20px",
+        padding: isMobile ? "10px 12px" : isCompact ? "12px 15px" : "15px 20px",
         backgroundColor: theme === "dark" ? "#1a1a1a" : "#fff",
         borderBottom: `1px solid ${theme === "dark" ? "#333" : "#eee"}`,
         display: "flex",
@@ -128,25 +130,25 @@ const MapPage = () => {
         zIndex: 100,
         flexWrap: "wrap",
         gap: "8px",
-        minHeight: isMobile ? "50px" : "60px"
+        minHeight: isMobile ? "50px" : isCompact ? "55px" : "60px"
       }}>
         <button 
           onClick={() => navigate("/")}
           style={{
-            padding: isMobile ? "8px 12px" : "10px 20px",
+            padding: isMobile ? "8px 12px" : isCompact ? "8px 14px" : "10px 20px",
             backgroundColor: "#b69767",
             color: "white",
             border: "none",
             borderRadius: "5px",
             cursor: "pointer",
-            fontSize: isMobile ? "12px" : "14px",
+            fontSize: isMobile ? "12px" : isCompact ? "12px" : "14px",
             minWidth: "auto",
             whiteSpace: "nowrap"
           }}
         >
           ← {isMobile ? "رجوع" : "الرجوع"}
         </button>
-        <h1 style={{ color: theme === "dark" ? "#fff" : "#000", margin: 0, fontSize: isMobile ? "14px" : "18px" }}>
+        <h1 style={{ color: theme === "dark" ? "#fff" : "#000", margin: 0, fontSize: isMobile ? "14px" : isCompact ? "15px" : "18px" }}>
         خريطة المدينة
         </h1>
         <div style={{ width: isMobile ? "50px" : "80px" }}></div>
@@ -169,23 +171,23 @@ const MapPage = () => {
           backgroundColor: theme === "dark" ? "#1a1a1a" : "#f9f9f9",
           borderRight: `1px solid ${theme === "dark" ? "#333" : "#ddd"}`,
           borderBottom: isMobile ? `1px solid ${theme === "dark" ? "#333" : "#ddd"}` : "none",
-          padding: "12px",
+          padding: isMobile ? "10px" : isCompact ? "10px" : "12px",
           overflowY: "auto",
           color: theme === "dark" ? "#fff" : "#000",
           direction: "rtl",
           textAlign: "right"
         }}>
-          <h2 style={{ fontSize: isMobile ? "14px" : "18px", marginTop: 0, marginBottom: "10px", textAlign: "center" }}>معلومات</h2>
+          <h2 style={{ fontSize: isMobile ? "14px" : isCompact ? "15px" : "18px", marginTop: 0, marginBottom: isMobile ? "8px" : isCompact ? "8px" : "10px", textAlign: "center" }}>معلومات</h2>
 
           {/* جدول البيانات */}
           <div style={{
             backgroundColor: theme === "dark" ? "#2a2a2a" : "#f0f0f0",
-            padding: isMobile ? "6px" : "8px",
+            padding: isMobile ? "6px" : isCompact ? "5px" : "8px",
             borderRadius: "6px",
-            marginBottom: isMobile ? "8px" : "10px"
+            marginBottom: isMobile ? "8px" : isCompact ? "6px" : "10px"
           }}>
-            <h3 style={{ color: "#b69767", marginBottom: isMobile ? "6px" : "8px", marginTop: "3px", fontSize: isMobile ? "11px" : "16px", whiteSpace: "nowrap" }}>بيانات</h3>
-            <div style={{ overflowX: "auto", fontSize: isMobile ? "9px" : "11px", maxHeight: isMobile ? "120px" : "auto", WebkitOverflowScrolling: "touch" }}>
+            <h3 style={{ color: "#b69767", marginBottom: isMobile ? "6px" : isCompact ? "5px" : "8px", marginTop: "2px", fontSize: isMobile ? "11px" : isCompact ? "13px" : "16px", whiteSpace: "nowrap" }}>بيانات</h3>
+            <div style={{ overflowX: "auto", fontSize: isMobile ? "9px" : isCompact ? "9px" : "11px", maxHeight: isMobile ? "120px" : isCompact ? "140px" : "auto", WebkitOverflowScrolling: "touch" }}>
               <table style={{
                 width: "100%",
                 borderCollapse: "collapse",
@@ -194,9 +196,9 @@ const MapPage = () => {
               }}>
                 <thead>
                   <tr style={{ backgroundColor: theme === "dark" ? "#1a1a1a" : "#e8e8e8", borderBottom: "2px solid #b69767" }}>
-                    <th style={{ padding: isMobile ? "5px" : "8px", textAlign: "right", color: "#b69767", fontWeight: "700", fontSize: isMobile ? "9px" : "inherit" }}>المحافظة</th>
-                    <th style={{ padding: isMobile ? "5px" : "8px", textAlign: "center", color: "#b69767", fontWeight: "700", fontSize: isMobile ? "9px" : "inherit" }}>مراكز</th>
-                    <th style={{ padding: isMobile ? "5px" : "8px", textAlign: "center", color: "#b69767", fontWeight: "700", fontSize: isMobile ? "9px" : "inherit" }}>الفجوة</th>
+                    <th style={{ padding: isMobile ? "5px" : isCompact ? "4px" : "8px", textAlign: "right", color: "#b69767", fontWeight: "700", fontSize: isMobile ? "9px" : isCompact ? "8px" : "inherit" }}>المحافظة</th>
+                    <th style={{ padding: isMobile ? "5px" : isCompact ? "4px" : "8px", textAlign: "center", color: "#b69767", fontWeight: "700", fontSize: isMobile ? "9px" : isCompact ? "8px" : "inherit" }}مراكز</th>
+                    <th style={{ padding: isMobile ? "5px" : isCompact ? "4px" : "8px", textAlign: "center", color: "#b69767", fontWeight: "700", fontSize: isMobile ? "9px" : isCompact ? "8px" : "inherit" }}>الفجوة</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -210,9 +212,9 @@ const MapPage = () => {
                     { city: "الحناكية", centers: 0, gap: "100%" }
                   ].map((row, idx) => (
                     <tr key={idx} style={{ borderBottom: `1px solid ${theme === "dark" ? "#3a3a3a" : "#ddd"}` }}>
-                      <td style={{ padding: isMobile ? "4px" : "6px", textAlign: "right", color: theme === "dark" ? "#ddd" : "#333", fontSize: isMobile ? "9px" : "inherit", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{isMobile ? row.city.substring(0, 10) : row.city}</td>
-                      <td style={{ padding: isMobile ? "4px" : "6px", textAlign: "center", color: "#b69767", fontWeight: "600", fontSize: isMobile ? "9px" : "inherit" }}>{row.centers}</td>
-                      <td style={{ padding: isMobile ? "4px" : "6px", textAlign: "center", color: "#b69767", fontWeight: "600", fontSize: isMobile ? "9px" : "inherit" }}>{row.gap}</td>
+                      <td style={{ padding: isMobile ? "4px" : isCompact ? "3px" : "6px", textAlign: "right", color: theme === "dark" ? "#ddd" : "#333", fontSize: isMobile ? "9px" : isCompact ? "8px" : "inherit", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{isMobile ? row.city.substring(0, 10) : isCompact ? row.city.substring(0, 12) : row.city}</td>
+                      <td style={{ padding: isMobile ? "4px" : isCompact ? "3px" : "6px", textAlign: "center", color: "#b69767", fontWeight: "600", fontSize: isMobile ? "9px" : isCompact ? "8px" : "inherit" }}>{row.centers}</td>
+                      <td style={{ padding: isMobile ? "4px" : isCompact ? "3px" : "6px", textAlign: "center", color: "#b69767", fontWeight: "600", fontSize: isMobile ? "9px" : isCompact ? "8px" : "inherit" }}>{row.gap}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -225,21 +227,21 @@ const MapPage = () => {
           {/* البيانات السكانية - Combo Chart */}
           <div style={{
             backgroundColor: theme === "dark" ? "#2a2a2a" : "#f0f0f0",
-            padding: isMobile ? "6px" : "8px",
+            padding: isMobile ? "6px" : isCompact ? "5px" : "8px",
             borderRadius: "6px",
-            marginBottom: isMobile ? "8px" : "10px",
+            marginBottom: isMobile ? "8px" : isCompact ? "6px" : "10px",
             display: isMobile ? "none" : "block"
           }}>
-            <h3 style={{ color: "#b69767", marginBottom: isMobile ? "6px" : "8px", marginTop: "3px", fontSize: isMobile ? "11px" : "16px", textAlign: "center", whiteSpace: "nowrap" }}>إحصائيات السكان</h3>
+            <h3 style={{ color: "#b69767", marginBottom: isMobile ? "6px" : isCompact ? "5px" : "8px", marginTop: "2px", fontSize: isMobile ? "11px" : isCompact ? "12px" : "16px", textAlign: "center", whiteSpace: "nowrap" }}>إحصائيات السكان</h3>
             
             {/* Combo Chart - Bars + Lines */}
             <div style={{ direction: "rtl", textAlign: "center", position: "relative", overflow: "hidden" }}>
               <svg
                 width="100%"
-                height={isMobile ? 120 : 350}
+                height={isMobile ? 120 : isCompact ? 200 : 350}
                 viewBox="0 0 900 350"
                 style={{
-                  minHeight: isMobile ? "120px" : "350px",
+                  minHeight: isMobile ? "120px" : isCompact ? "200px" : "350px",
                   backgroundColor: theme === "dark" ? "#1a1a1a" : "#fafafa",
                   borderRadius: "6px",
                   transition: "all 0.3s ease"
@@ -280,7 +282,7 @@ const MapPage = () => {
                       x="-5"
                       y={308 - (i * 50)}
                       textAnchor="end"
-                      fontSize={isMobile ? "10" : "14"}
+                      fontSize={isMobile ? "10" : isCompact ? "11" : "14"}
                       fontWeight="700"
                       fill="#b69767"
                     >
@@ -296,7 +298,7 @@ const MapPage = () => {
                     x={70 + i * 130}
                     y="320"
                     textAnchor="middle"
-                    fontSize={isMobile ? "9" : "12"}
+                    fontSize={isMobile ? "9" : isCompact ? "10" : "12"}
                     fontWeight="600"
                     fill={theme === "dark" ? "#ddd" : "#333"}
                   >
@@ -397,20 +399,20 @@ const MapPage = () => {
             <div style={{
               display: "flex",
               justifyContent: "center",
-              gap: isMobile ? "10px" : "15px",
-              marginTop: isMobile ? "8px" : "12px",
-              padding: isMobile ? "6px" : "8px",
+              gap: isMobile ? "10px" : isCompact ? "8px" : "15px",
+              marginTop: isMobile ? "8px" : isCompact ? "6px" : "12px",
+              padding: isMobile ? "6px" : isCompact ? "5px" : "8px",
               backgroundColor: theme === "dark" ? "#1a1a1a" : "#f5f5f5",
               borderRadius: "4px",
               flexWrap: "wrap"
             }}>
-              <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "5px" : "8px", direction: "rtl" }}>
-                <div style={{ width: isMobile ? "12px" : "20px", height: "2px", backgroundColor: "#e74c3c" }} />
-                <span style={{ fontSize: isMobile ? "9px" : "16px", fontWeight: "700", whiteSpace: "nowrap" }}>السكان</span>
+              <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "5px" : isCompact ? "4px" : "8px", direction: "rtl" }}>
+                <div style={{ width: isMobile ? "12px" : isCompact ? "10px" : "20px", height: "2px", backgroundColor: "#e74c3c" }} />
+                <span style={{ fontSize: isMobile ? "9px" : isCompact ? "9px" : "16px", fontWeight: "700", whiteSpace: "nowrap" }}>السكان</span>
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "5px" : "8px", direction: "rtl" }}>
-                <div style={{ width: isMobile ? "12px" : "20px", height: "2px", backgroundColor: "#27ae60" }} />
-                <span style={{ fontSize: isMobile ? "9px" : "16px", fontWeight: "700", whiteSpace: "nowrap" }}>الزيادة</span>
+              <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "5px" : isCompact ? "4px" : "8px", direction: "rtl" }}>
+                <div style={{ width: isMobile ? "12px" : isCompact ? "10px" : "20px", height: "2px", backgroundColor: "#27ae60" }} />
+                <span style={{ fontSize: isMobile ? "9px" : isCompact ? "9px" : "16px", fontWeight: "700", whiteSpace: "nowrap" }}>الزيادة</span>
               </div>
             </div>
           </div>
@@ -491,12 +493,12 @@ const MapPage = () => {
           overflowY: "auto",
           color: theme === "dark" ? "#fff" : "#000"
         }}>
-          <h2 style={{ fontSize: isMobile ? "14px" : "18px", marginTop: 0, marginBottom: "10px", textAlign: "center" }}> مراكز</h2>
+          <h2 style={{ fontSize: isMobile ? "14px" : isCompact ? "15px" : "18px", marginTop: 0, marginBottom: isMobile ? "8px" : isCompact ? "8px" : "10px", textAlign: "center" }}> مراكز</h2>
           <div style={{
             backgroundColor: theme === "dark" ? "#2a2a2a" : "#f0f0f0",
-            padding: "10px",
+            padding: isMobile ? "8px" : isCompact ? "8px" : "10px",
             borderRadius: "8px",
-            maxHeight: isMobile ? "calc(33.34vh - 115px)" : "800px",
+            maxHeight: isMobile ? "calc(33.34vh - 115px)" : isCompact ? "calc(100vh - 200px)" : "800px",
             overflowY: "auto"
           }}>
             {CareCentersData.features.map((feature, index) => (
@@ -504,14 +506,14 @@ const MapPage = () => {
                 key={index}
                 onClick={() => setSelectedCenter({ index, feature })}
                 style={{
-                  padding: isMobile ? "6px" : "8px",
+                  padding: isMobile ? "6px" : isCompact ? "6px" : "8px",
                   marginBottom: "4px",
                   backgroundColor: selectedCenter?.index === index 
                     ? "#b69767" 
                     : (theme === "dark" ? "#1a1a1a" : "#f5f5f5"),
                   borderRight: "3px solid #b69767",
                   borderRadius: "3px",
-                  fontSize: isMobile ? "9px" : "12px",
+                  fontSize: isMobile ? "9px" : isCompact ? "10px" : "12px",
                   cursor: "pointer",
                   textAlign: "right",
                   direction: "rtl",
@@ -520,8 +522,8 @@ const MapPage = () => {
                   fontWeight: selectedCenter?.index === index ? "700" : "normal"
                 }}
               >
-                <p style={{ margin: "0", fontWeight: "bold", fontSize: isMobile ? "8px" : "12px" }}>
-                  {(index + 1) + ". " + (isMobile ? (feature.properties.name?.substring(0, 12) || "مركز") : feature.properties.name)}
+                <p style={{ margin: "0", fontWeight: "bold", fontSize: isMobile ? "8px" : isCompact ? "9px" : "12px" }}>
+                  {(index + 1) + ". " + (isMobile ? (feature.properties.name?.substring(0, 12) || "مركز") : isCompact ? (feature.properties.name?.substring(0, 14) || "مركز") : feature.properties.name)}
                 </p>
               </div>
             ))}
