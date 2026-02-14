@@ -3,15 +3,13 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .map-view-top {
   display: flex;
-  height: 65%;
+  flex: 0 0 calc(100% - 300px);
   position: relative;
-  min-height: 400px;
   width: 100%;
 }
 
@@ -23,55 +21,47 @@
 }
 
 .map-view-bottom {
-  height: 35%;
-  min-height: 200px;
-  overflow-y: auto;
+  flex: 0 0 300px;
+  overflow: hidden;
   width: 100%;
 }
 
 /* Tablet and smaller screens */
 @media (max-width: 1024px) {
   .map-view-top {
-    min-height: 350px;
+    flex: 0 0 calc(100% - 280px);
   }
   .map-view-bottom {
-    min-height: 250px;
+    flex: 0 0 280px;
   }
 }
 
 /* Tablets (landscape) */
 @media (max-width: 768px) {
-  .map-view-container {
-    min-height: auto;
-  }
   .map-view-top {
-    height: 50%;
-    min-height: 300px;
+    flex: 0 0 calc(100% - 260px);
   }
   .map-view-bottom {
-    height: 50%;
-    min-height: 280px;
+    flex: 0 0 260px;
   }
 }
 
 /* Phones (portrait) */
 @media (max-width: 480px) {
   .map-view-top {
-    height: auto;
-    min-height: 250px;
+    flex: 0 0 calc(100% - 240px);
   }
   .map-view-bottom {
-    height: auto;
-    min-height: 250px;
+    flex: 0 0 240px;
   }
 }
 
 /* Very small screens */
 @media (max-width: 360px) {
   .map-view-top {
-    min-height: 200px;
+    flex: 0 0 calc(100% - 180px);
   }
   .map-view-bottom {
-    min-height: 200px;
+    flex: 0 0 180px;
   }
 }

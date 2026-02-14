@@ -16,6 +16,18 @@ import {
 } from "recharts";
 
 function ChartsSection({ theme }) {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isCompact, setIsCompact] = useState(window.innerWidth <= 1366);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+      setIsCompact(window.innerWidth <= 1366);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const [statsData, setStatsData] = useState({
     fullyExecutedStations: 0,
     partiallyExecutedStations: 0,
@@ -140,9 +152,10 @@ function ChartsSection({ theme }) {
   return (
     <div style={{
       backgroundColor: theme === "dark" ? "#1a1a1a" : "#fff",
-      padding: "10px",
+      padding: isMobile ? "8px" : isCompact ? "8px" : "10px",
       height: "100%",
-      overflow: "auto"
+      overflow: isMobile ? "auto" : "hidden",
+      overflowY: isMobile ? "auto" : "hidden"
     }}>
       <div
         style={{
@@ -154,15 +167,17 @@ function ChartsSection({ theme }) {
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
+          flexDirection: isMobile ? "column" : "row",
+          alignItems: isMobile ? "stretch" : "center",
           justifyContent: "flex-start",
-          gap: "10px",
-          padding: "10px"
+          gap: isMobile ? "6px" : isCompact ? "6px" : "8px",
+          padding: isMobile ? "6px" : isCompact ? "6px" : "8px",
+          overflow: "hidden",
+          flexWrap: "nowrap"
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", flex: "0 0 auto", order: 3 }}>
-          <ResponsiveContainer width={450} height={200}>
+        <div style={{ display: "flex", alignItems: "center", flex: isMobile ? "1" : isCompact ? "0 0 250px" : "0 0 350px", order: isMobile ? 3 : 3, minWidth: isMobile ? "100%" : "auto", minHeight: "0" }}>
+          <ResponsiveContainer width={isMobile ? "100%" : "100%"} height={isMobile ? 120 : isCompact ? 140 : 180}>
             <BarChart data={disabilityChartData}>
               <defs>
                 <linearGradient id="goldGradient" x1="0" y1="0" x2="0" y2="1">
@@ -175,8 +190,8 @@ function ChartsSection({ theme }) {
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke={theme === "dark" ? "rgba(255,255,255,0.1)" : "#ddd"} />
-              <XAxis dataKey="year" tick={{ fontSize: 12, fill: theme === "dark" ? "#eaeaea" : "#111111" }} />
-              <YAxis tick={{ fontSize: 12, fill: theme === "dark" ? "#eaeaea" : "#111111" }} />
+              <XAxis dataKey="year" tick={{ fontSize: isMobile ? 10 : 12, fill: theme === "dark" ? "#eaeaea" : "#111111" }} />
+              <YAxis tick={{ fontSize: isMobile ? 10 : 12, fill: theme === "dark" ? "#eaeaea" : "#111111" }} />
               <Tooltip 
                 contentStyle={{
                   background: theme === "dark" ? "#252525" : "#fff",
@@ -185,7 +200,7 @@ function ChartsSection({ theme }) {
                 }}
                 formatter={(value) => value.toLocaleString()}
               />
-              <Legend wrapperStyle={{ color: theme === "dark" ? "#eaeaea" : "#111111" }} />
+              <Legend wrapperStyle={{ color: theme === "dark" ? "#eaeaea" : "#111111", fontSize: isMobile ? "9px" : "10px" }} />
               <Bar dataKey="disabled" fill="url(#goldGradient)" name="عدد ذوو الإعاقة" />
               <Bar dataKey="population" fill="url(#blueGradient)" name="عدد السكان" />
             </BarChart>
@@ -198,10 +213,12 @@ function ChartsSection({ theme }) {
           flexDirection: "column",
           alignItems: "center",
           gap: "0px",
-          order: 2,
-          flex: "0 0 auto"
+          order: isMobile ? 2 : 2,
+          flex: isMobile ? "1" : isCompact ? "0 0 140px" : "0 0 180px",
+          minWidth: isMobile ? "100%" : "auto",
+          minHeight: "0"
         }}>
-          <ResponsiveContainer width={200} height={200}>
+          <ResponsiveContainer width={isMobile ? "100%" : "100%"} height={isMobile ? 120 : isCompact ? 140 : 180}>
             <PieChart>
               <Pie
                 data={careDataPie}
@@ -209,7 +226,7 @@ function ChartsSection({ theme }) {
                 cy="50%"
                 labelLine={true}
                 label={({ value }) => `${value}%`}
-                outerRadius={60}
+                outerRadius={isMobile ? 35 : isCompact ? 40 : 50}
                 fill="#8884d8"
                 dataKey="value"
               >
@@ -221,39 +238,46 @@ function ChartsSection({ theme }) {
             </PieChart>
           </ResponsiveContainer>
           <p style={{
-            fontSize: "11px",
+            fontSize: isMobile ? "8px" : isCompact ? "8px" : "10px",
             color: theme === "dark" ? "#eaeaea" : "#555",
             textAlign: "center",
-            marginTop: "5px",
-            marginBottom: "0px"
-          }}>حجم المستفيدين من الرعايات المالية في منطقة المدينة المنورة</p>
+            marginTop: isMobile ? "2px" : "3px",
+            marginBottom: "0px",
+            lineHeight: "1.2"
+          }}>حجم المستفيدين</p>
         </div>
 
         {/* البار تشارت الثاني والجدول */}
         <div style={{
-          flex: 1,
-          padding: "5px",
-          order: 1
+          flex: isMobile ? "1" : isCompact ? "0 0 280px" : "1",
+          padding: isMobile ? "2px" : isCompact ? "3px" : "4px",
+          order: isMobile ? 1 : 1,
+          minWidth: isMobile ? "100%" : "auto",
+          minHeight: "0",
+          overflow: "hidden"
         }}>
           <h3 style={{
             textAlign: "right",
-            marginBottom: "4px",
+            marginBottom: isMobile ? "2px" : isCompact ? "2px" : "3px",
             color: theme === "dark" ? "#eaeaea" : "#333",
-            fontSize: "11px",
-            fontWeight: "bold"
-          }}>توزيع المستفيدين حسب نوع الإعاقة</h3>
+            fontSize: isMobile ? "9px" : isCompact ? "9px" : "10px",
+            fontWeight: "bold",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis"
+          }}>توزيع المستفيدين</h3>
           
-          <ResponsiveContainer width={550} height={200}>
+          <ResponsiveContainer width={isMobile ? "100%" : "100%"} height={isMobile ? 120 : isCompact ? 140 : 180}>
           <BarChart data={disabilityBarChart}>
             <CartesianGrid strokeDasharray="3 3" stroke={theme === "dark" ? "rgba(255,255,255,0.1)" : "#ddd"} />
             <XAxis 
               dataKey="name"
-              tick={{ fontSize: 9, fill: theme === "dark" ? "#eaeaea" : "#111111" }}
+              tick={{ fontSize: isMobile ? 7 : isCompact ? 7 : 8, fill: theme === "dark" ? "#eaeaea" : "#111111" }}
               angle={-45}
               textAnchor="end"
-              height={40}
+              height={isMobile ? 25 : isCompact ? 28 : 30}
             />
-            <YAxis tick={{ fontSize: 9, fill: theme === "dark" ? "#eaeaea" : "#111111" }} />
+            <YAxis tick={{ fontSize: isMobile ? 7 : isCompact ? 7 : 8, fill: theme === "dark" ? "#eaeaea" : "#111111" }} />
             <Tooltip 
               contentStyle={{
                 background: theme === "dark" ? "#252525" : "#fff",
@@ -263,7 +287,7 @@ function ChartsSection({ theme }) {
               formatter={(value) => value.toLocaleString()}
               labelFormatter={(label) => `${label}`}
             />
-            <Legend wrapperStyle={{ paddingTop: "10px", color: theme === "dark" ? "#eaeaea" : "#111111", fontSize: "10px" }} />
+            <Legend wrapperStyle={{ paddingTop: isMobile ? "2px" : isCompact ? "3px" : "5px", color: theme === "dark" ? "#eaeaea" : "#111111", fontSize: isMobile ? "8px" : isCompact ? "8px" : "9px" }} />
             <Bar dataKey="users" fill="#f4d080" name="عدد المستفيدين" radius={[8, 8, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
@@ -277,9 +301,10 @@ function ChartsSection({ theme }) {
       <div style={{
         display: "flex",
         flexDirection: "row",
-        gap: "10px",
-        padding: "10px",
-        alignItems: "flex-start"
+        gap: isMobile ? "6px" : isCompact ? "6px" : "8px",
+        padding: isMobile ? "6px" : isCompact ? "6px" : "8px",
+        alignItems: "flex-start",
+        overflow: "hidden"
       }}>   
        
    
