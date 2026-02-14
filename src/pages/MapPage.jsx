@@ -116,10 +116,10 @@ const MapPage = () => {
   };
 
   return (
-    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+    <div style={{ height: "100vh", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       {/* Header */}
       <header style={{
-        padding: "15px 20px",
+        padding: isMobile ? "10px 12px" : "15px 20px",
         backgroundColor: theme === "dark" ? "#1a1a1a" : "#fff",
         borderBottom: `1px solid ${theme === "dark" ? "#333" : "#eee"}`,
         display: "flex",
@@ -127,27 +127,29 @@ const MapPage = () => {
         alignItems: "center",
         zIndex: 100,
         flexWrap: "wrap",
-        gap: "10px"
+        gap: "8px",
+        minHeight: isMobile ? "50px" : "60px"
       }}>
         <button 
           onClick={() => navigate("/")}
           style={{
-            padding: "10px 20px",
+            padding: isMobile ? "8px 12px" : "10px 20px",
             backgroundColor: "#b69767",
             color: "white",
             border: "none",
             borderRadius: "5px",
             cursor: "pointer",
-            fontSize: "14px",
-            minWidth: "auto"
+            fontSize: isMobile ? "12px" : "14px",
+            minWidth: "auto",
+            whiteSpace: "nowrap"
           }}
         >
-          ← الرجوع
+          ← {isMobile ? "رجوع" : "الرجوع"}
         </button>
-        <h1 style={{ color: theme === "dark" ? "#fff" : "#000", margin: 0, fontSize: "18px" }}>
-        خريطة المدينة المنورة
+        <h1 style={{ color: theme === "dark" ? "#fff" : "#000", margin: 0, fontSize: isMobile ? "14px" : "18px" }}>
+        خريطة المدينة
         </h1>
-        <div style={{ width: "80px" }}></div>
+        <div style={{ width: isMobile ? "50px" : "80px" }}></div>
       </header>
 
       {/* Main Container */}
@@ -162,28 +164,28 @@ const MapPage = () => {
         <div style={{
           width: isMobile ? "100%" : "30%",
           height: isMobile ? "auto" : "100%",
-          minHeight: isMobile ? "auto" : "0",
-          maxHeight: isMobile ? "300px" : "100%",
+          flex: isMobile ? "0 0 auto" : "1",
+          maxHeight: isMobile ? "calc(33.33vh - 70px)" : "100%",
           backgroundColor: theme === "dark" ? "#1a1a1a" : "#f9f9f9",
           borderRight: `1px solid ${theme === "dark" ? "#333" : "#ddd"}`,
           borderBottom: isMobile ? `1px solid ${theme === "dark" ? "#333" : "#ddd"}` : "none",
-          padding: "15px",
+          padding: "12px",
           overflowY: "auto",
           color: theme === "dark" ? "#fff" : "#000",
           direction: "rtl",
           textAlign: "right"
         }}>
-          <h2 style={{ fontSize: "18px", marginTop: 0, textAlign: "center" }}>معلومات</h2>
+          <h2 style={{ fontSize: isMobile ? "14px" : "18px", marginTop: 0, marginBottom: "10px", textAlign: "center" }}>معلومات</h2>
 
           {/* جدول البيانات */}
           <div style={{
             backgroundColor: theme === "dark" ? "#2a2a2a" : "#f0f0f0",
-            padding: "10px",
-            borderRadius: "8px",
-            marginBottom: "15px"
+            padding: "8px",
+            borderRadius: "6px",
+            marginBottom: "10px"
           }}>
-            <h3 style={{ color: "#b69767", marginBottom: "10px", fontSize: isMobile ? "14px" : "16px" }}>بيانات المحافظات</h3>
-            <div style={{ overflowX: "auto", fontSize: isMobile ? "9px" : "11px" }}>
+            <h3 style={{ color: "#b69767", marginBottom: "8px", marginTop: "5px", fontSize: isMobile ? "12px" : "16px" }}>بيانات</h3>
+            <div style={{ overflowX: "auto", fontSize: isMobile ? "8px" : "11px", maxHeight: isMobile ? "100px" : "auto" }}>
               <table style={{
                 width: "100%",
                 borderCollapse: "collapse",
@@ -191,9 +193,9 @@ const MapPage = () => {
               }}>
                 <thead>
                   <tr style={{ backgroundColor: theme === "dark" ? "#1a1a1a" : "#e8e8e8", borderBottom: "2px solid #b69767" }}>
-                    <th style={{ padding: "8px", textAlign: "right", color: "#b69767", fontWeight: "700" }}>المحافظة</th>
-                    <th style={{ padding: "8px", textAlign: "right", color: "#b69767", fontWeight: "700" }}>مراكز</th>
-                    <th style={{ padding: "8px", textAlign: "right", color: "#b69767", fontWeight: "700" }}>الفجوة</th>
+                    <th style={{ padding: isMobile ? "4px" : "8px", textAlign: "right", color: "#b69767", fontWeight: "700" }}>المحافظة</th>
+                    <th style={{ padding: isMobile ? "4px" : "8px", textAlign: "right", color: "#b69767", fontWeight: "700" }}>مراكز</th>
+                    <th style={{ padding: isMobile ? "4px" : "8px", textAlign: "right", color: "#b69767", fontWeight: "700" }}>الفجوة</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -207,9 +209,9 @@ const MapPage = () => {
                     { city: "الحناكية", centers: 0, gap: "100%" }
                   ].map((row, idx) => (
                     <tr key={idx} style={{ borderBottom: `1px solid ${theme === "dark" ? "#3a3a3a" : "#ddd"}` }}>
-                      <td style={{ padding: "6px", textAlign: "right", color: theme === "dark" ? "#ddd" : "#333" }}>{row.city}</td>
-                      <td style={{ padding: "6px", textAlign: "center", color: "#b69767", fontWeight: "600" }}>{row.centers}</td>
-                      <td style={{ padding: "6px", textAlign: "center", color: "#b69767", fontWeight: "600" }}>{row.gap}</td>
+                      <td style={{ padding: isMobile ? "3px" : "6px", textAlign: "right", color: theme === "dark" ? "#ddd" : "#333", fontSize: isMobile ? "9px" : "inherit" }}>{row.city}</td>
+                      <td style={{ padding: isMobile ? "3px" : "6px", textAlign: "center", color: "#b69767", fontWeight: "600", fontSize: isMobile ? "9px" : "inherit" }}>{row.centers}</td>
+                      <td style={{ padding: isMobile ? "3px" : "6px", textAlign: "center", color: "#b69767", fontWeight: "600", fontSize: isMobile ? "9px" : "inherit" }}>{row.gap}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -222,21 +224,21 @@ const MapPage = () => {
           {/* البيانات السكانية - Combo Chart */}
           <div style={{
             backgroundColor: theme === "dark" ? "#2a2a2a" : "#f0f0f0",
-            padding: "10px",
-            borderRadius: "8px",
-            marginBottom: "15px",
+            padding: "8px",
+            borderRadius: "6px",
+            marginBottom: "10px",
             display: isMobile ? "none" : "block"
           }}>
-            <h3 style={{ color: "#b69767", marginBottom: "15px", fontSize: "16px", textAlign: "center" }}>إحصائيات السكان والإعاقة بالمدينة المنورة</h3>
+            <h3 style={{ color: "#b69767", marginBottom: "8px", marginTop: "5px", fontSize: isMobile ? "12px" : "16px", textAlign: "center" }}>إحصائيات السكان</h3>
             
             {/* Combo Chart - Bars + Lines */}
             <div style={{ direction: "rtl", textAlign: "center", position: "relative" }}>
               <svg
                 width="100%"
-                height={isMobile ? 200 : 350}
+                height={isMobile ? 150 : 350}
                 viewBox="0 0 900 350"
                 style={{
-                  minHeight: isMobile ? "200px" : "350px",
+                  minHeight: isMobile ? "150px" : "350px",
                   backgroundColor: theme === "dark" ? "#1a1a1a" : "#fafafa",
                   borderRadius: "6px"
                 }}
@@ -393,20 +395,20 @@ const MapPage = () => {
             <div style={{
               display: "flex",
               justifyContent: "center",
-              gap: "30px",
-              marginTop: "20px",
-              padding: "12px",
+              gap: "15px",
+              marginTop: "12px",
+              padding: "8px",
               backgroundColor: theme === "dark" ? "#1a1a1a" : "#f5f5f5",
-              borderRadius: "6px",
+              borderRadius: "4px",
               flexWrap: "wrap"
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", direction: "rtl" }}>
                 <div style={{ width: "20px", height: "3px", backgroundColor: "#e74c3c" }} />
-                <span style={{ fontSize: "16px", fontWeight: "700" }}>كثافة السكان</span>
+                <span style={{ fontSize: isMobile ? "11px" : "16px", fontWeight: "700" }}>السكان</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "8px", direction: "rtl" }}>
                 <div style={{ width: "20px", height: "3px", backgroundColor: "#27ae60" }} />
-                <span style={{ fontSize: "16px", fontWeight: "700" }}>نسبة الزيادة</span>
+                <span style={{ fontSize: isMobile ? "11px" : "16px", fontWeight: "700" }}>الزيادة</span>
               </div>
             </div>
           </div>
@@ -418,8 +420,8 @@ const MapPage = () => {
         {/* Map Container - 60% */}
         <div style={{
           width: isMobile ? "100%" : "50%",
-          height: isMobile ? "300px" : "100%",
-          minHeight: isMobile ? "300px" : "0",
+          height: isMobile ? "calc(33.33vh - 70px)" : "100%",
+          flex: isMobile ? "0 0 auto" : "1",
           position: "relative"
         }}>
           <MapContainer
@@ -478,21 +480,21 @@ const MapPage = () => {
         <div style={{
           width: isMobile ? "100%" : "20%",
           height: isMobile ? "auto" : "100%",
-          minHeight: isMobile ? "auto" : "0",
-          maxHeight: isMobile ? "250px" : "100%",
+          flex: isMobile ? "0 0 auto" : "1",
+          maxHeight: isMobile ? "calc(33.34vh - 70px)" : "100%",
           backgroundColor: theme === "dark" ? "#1a1a1a" : "#f9f9f9",
           borderLeft: `1px solid ${theme === "dark" ? "#333" : "#ddd"}`,
           borderTop: isMobile ? `1px solid ${theme === "dark" ? "#333" : "#ddd"}` : "none",
-          padding: "15px",
+          padding: "12px",
           overflowY: "auto",
           color: theme === "dark" ? "#fff" : "#000"
         }}>
-          <h2 style={{ fontSize: "18px", marginTop: 0, textAlign: "center" }}> مراكز</h2>
+          <h2 style={{ fontSize: isMobile ? "14px" : "18px", marginTop: 0, marginBottom: "10px", textAlign: "center" }}> مراكز</h2>
           <div style={{
             backgroundColor: theme === "dark" ? "#2a2a2a" : "#f0f0f0",
             padding: "10px",
             borderRadius: "8px",
-            maxHeight: isMobile ? "200px" : "800px",
+            maxHeight: isMobile ? "calc(33.34vh - 115px)" : "800px",
             overflowY: "auto"
           }}>
             {CareCentersData.features.map((feature, index) => (
@@ -500,14 +502,14 @@ const MapPage = () => {
                 key={index}
                 onClick={() => setSelectedCenter({ index, feature })}
                 style={{
-                  padding: "8px",
-                  marginBottom: "6px",
+                  padding: isMobile ? "6px" : "8px",
+                  marginBottom: "4px",
                   backgroundColor: selectedCenter?.index === index 
                     ? "#b69767" 
                     : (theme === "dark" ? "#1a1a1a" : "#f5f5f5"),
                   borderRight: "3px solid #b69767",
-                  borderRadius: "4px",
-                  fontSize: isMobile ? "10px" : "12px",
+                  borderRadius: "3px",
+                  fontSize: isMobile ? "9px" : "12px",
                   cursor: "pointer",
                   textAlign: "right",
                   direction: "rtl",
@@ -516,8 +518,8 @@ const MapPage = () => {
                   fontWeight: selectedCenter?.index === index ? "700" : "normal"
                 }}
               >
-                <p style={{ margin: "0 0 3px 0", fontWeight: "bold" }}>
-                  {index + 1}. {isMobile ? (feature.properties.name?.substring(0, 15) + '...') : feature.properties.name}
+                <p style={{ margin: "0", fontWeight: "bold", fontSize: isMobile ? "8px" : "12px" }}>
+                  {(index + 1) + ". " + (isMobile ? (feature.properties.name?.substring(0, 12) || "مركز") : feature.properties.name)}
                 </p>
               </div>
             ))}
