@@ -48,7 +48,16 @@ const MapPage = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
   const [selectedCenter, setSelectedCenter] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const markersRef = useRef({});
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const keyTranslations = {
     name: "الاسم",
@@ -116,7 +125,9 @@ const MapPage = () => {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        zIndex: 100
+        zIndex: 100,
+        flexWrap: "wrap",
+        gap: "10px"
       }}>
         <button 
           onClick={() => navigate("/")}
@@ -127,43 +138,52 @@ const MapPage = () => {
             border: "none",
             borderRadius: "5px",
             cursor: "pointer",
-            fontSize: "16px"
+            fontSize: "14px",
+            minWidth: "auto"
           }}
         >
-          ← الرجوع للرئيسية
+          ← الرجوع
         </button>
-        <h1 style={{ color: theme === "dark" ? "#fff" : "#000", margin: 0 }}>
+        <h1 style={{ color: theme === "dark" ? "#fff" : "#000", margin: 0, fontSize: "18px" }}>
         خريطة المدينة المنورة
         </h1>
-        <div style={{ width: "150px" }}></div>
+        <div style={{ width: "80px" }}></div>
       </header>
 
       {/* Main Container */}
-      <div style={{ flex: 1, display: "flex", gap: 0 }}>
-        {/* Left Sidebar - 20% */}
+      <div style={{ 
+        flex: 1, 
+        display: "flex", 
+        gap: 0,
+        flexDirection: isMobile ? "column" : "row",
+        overflow: "hidden"
+      }}>
+      {/* Left Sidebar - 20% */}
         <div style={{
-          width: "30%",
+          width: isMobile ? "100%" : "30%",
+          height: isMobile ? "auto" : "100%",
+          minHeight: isMobile ? "auto" : "0",
+          maxHeight: isMobile ? "300px" : "100%",
           backgroundColor: theme === "dark" ? "#1a1a1a" : "#f9f9f9",
           borderRight: `1px solid ${theme === "dark" ? "#333" : "#ddd"}`,
-          padding: "20px",
+          borderBottom: isMobile ? `1px solid ${theme === "dark" ? "#333" : "#ddd"}` : "none",
+          padding: "15px",
           overflowY: "auto",
           color: theme === "dark" ? "#fff" : "#000",
           direction: "rtl",
           textAlign: "right"
         }}>
           <h2 style={{ fontSize: "18px", marginTop: 0, textAlign: "center" }}>معلومات</h2>
-          
-  
 
           {/* جدول البيانات */}
           <div style={{
             backgroundColor: theme === "dark" ? "#2a2a2a" : "#f0f0f0",
-            padding: "15px",
+            padding: "10px",
             borderRadius: "8px",
             marginBottom: "15px"
           }}>
-            <h3 style={{ color: "#b69767", marginBottom: "15px", fontSize: "16px" }}>بيانات المحافظات</h3>
-            <div style={{ overflowX: "auto", fontSize: "11px" }}>
+            <h3 style={{ color: "#b69767", marginBottom: "10px", fontSize: isMobile ? "14px" : "16px" }}>بيانات المحافظات</h3>
+            <div style={{ overflowX: "auto", fontSize: isMobile ? "9px" : "11px" }}>
               <table style={{
                 width: "100%",
                 borderCollapse: "collapse",
@@ -202,9 +222,10 @@ const MapPage = () => {
           {/* البيانات السكانية - Combo Chart */}
           <div style={{
             backgroundColor: theme === "dark" ? "#2a2a2a" : "#f0f0f0",
-            padding: "2px",
+            padding: "10px",
             borderRadius: "8px",
-            marginBottom: "15px"
+            marginBottom: "15px",
+            display: isMobile ? "none" : "block"
           }}>
             <h3 style={{ color: "#b69767", marginBottom: "15px", fontSize: "16px", textAlign: "center" }}>إحصائيات السكان والإعاقة بالمدينة المنورة</h3>
             
@@ -212,10 +233,10 @@ const MapPage = () => {
             <div style={{ direction: "rtl", textAlign: "center", position: "relative" }}>
               <svg
                 width="100%"
-                height="350"
+                height={isMobile ? 200 : 350}
                 viewBox="0 0 900 350"
                 style={{
-                  minHeight: "350px",
+                  minHeight: isMobile ? "200px" : "350px",
                   backgroundColor: theme === "dark" ? "#1a1a1a" : "#fafafa",
                   borderRadius: "6px"
                 }}
@@ -396,7 +417,9 @@ const MapPage = () => {
 
         {/* Map Container - 60% */}
         <div style={{
-          width: "50%",
+          width: isMobile ? "100%" : "50%",
+          height: isMobile ? "300px" : "100%",
+          minHeight: isMobile ? "300px" : "0",
           position: "relative"
         }}>
           <MapContainer
@@ -453,19 +476,23 @@ const MapPage = () => {
 
         {/* Right Sidebar - 20% */}
         <div style={{
-          width: "20%",
+          width: isMobile ? "100%" : "20%",
+          height: isMobile ? "auto" : "100%",
+          minHeight: isMobile ? "auto" : "0",
+          maxHeight: isMobile ? "250px" : "100%",
           backgroundColor: theme === "dark" ? "#1a1a1a" : "#f9f9f9",
           borderLeft: `1px solid ${theme === "dark" ? "#333" : "#ddd"}`,
-          padding: "20px",
+          borderTop: isMobile ? `1px solid ${theme === "dark" ? "#333" : "#ddd"}` : "none",
+          padding: "15px",
           overflowY: "auto",
           color: theme === "dark" ? "#fff" : "#000"
         }}>
-          <h2 style={{ fontSize: "18px", marginTop: 0, textAlign: "center" }}> مراكز العناية</h2>
+          <h2 style={{ fontSize: "18px", marginTop: 0, textAlign: "center" }}> مراكز</h2>
           <div style={{
             backgroundColor: theme === "dark" ? "#2a2a2a" : "#f0f0f0",
-            padding: "15px",
+            padding: "10px",
             borderRadius: "8px",
-            maxHeight: "800px",
+            maxHeight: isMobile ? "200px" : "800px",
             overflowY: "auto"
           }}>
             {CareCentersData.features.map((feature, index) => (
@@ -473,14 +500,14 @@ const MapPage = () => {
                 key={index}
                 onClick={() => setSelectedCenter({ index, feature })}
                 style={{
-                  padding: "10px",
-                  marginBottom: "8px",
+                  padding: "8px",
+                  marginBottom: "6px",
                   backgroundColor: selectedCenter?.index === index 
                     ? "#b69767" 
                     : (theme === "dark" ? "#1a1a1a" : "#f5f5f5"),
                   borderRight: "3px solid #b69767",
                   borderRadius: "4px",
-                  fontSize: "12px",
+                  fontSize: isMobile ? "10px" : "12px",
                   cursor: "pointer",
                   textAlign: "right",
                   direction: "rtl",
@@ -489,8 +516,8 @@ const MapPage = () => {
                   fontWeight: selectedCenter?.index === index ? "700" : "normal"
                 }}
               >
-                <p style={{ margin: "0 0 5px 0", fontWeight: "bold" }}>
-                  {index + 1}. {feature.properties.name}
+                <p style={{ margin: "0 0 3px 0", fontWeight: "bold" }}>
+                  {index + 1}. {isMobile ? (feature.properties.name?.substring(0, 15) + '...') : feature.properties.name}
                 </p>
               </div>
             ))}
