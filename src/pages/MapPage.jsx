@@ -187,7 +187,7 @@ const MapPage = () => {
             marginBottom: isMobile ? "8px" : isCompact ? "6px" : "10px"
           }}>
             <h3 style={{ color: "#b69767", marginBottom: isMobile ? "6px" : isCompact ? "5px" : "8px", marginTop: "2px", fontSize: isMobile ? "11px" : isCompact ? "13px" : "16px", whiteSpace: "nowrap" }}>بيانات</h3>
-            <div style={{ overflowX: "auto", fontSize: isMobile ? "9px" : isCompact ? "9px" : "11px", maxHeight: isMobile ? "120px" : isCompact ? "140px" : "auto", WebkitOverflowScrolling: "touch" }}>
+            <div style={{ overflowX: "auto", fontSize: isMobile ? "8px" : isCompact ? "8px" : "11px", maxHeight: isMobile ? "100px" : isCompact ? "100px" : "auto", WebkitOverflowScrolling: "touch" }}>
               <table style={{
                 width: "100%",
                 borderCollapse: "collapse",
@@ -197,7 +197,7 @@ const MapPage = () => {
                 <thead>
                   <tr style={{ backgroundColor: theme === "dark" ? "#1a1a1a" : "#e8e8e8", borderBottom: "2px solid #b69767" }}>
                     <th style={{ padding: isMobile ? "5px" : isCompact ? "4px" : "8px", textAlign: "right", color: "#b69767", fontWeight: "700", fontSize: isMobile ? "9px" : isCompact ? "8px" : "inherit" }}>المحافظة</th>
-                    <th style={{ padding: isMobile ? "5px" : isCompact ? "4px" : "8px", textAlign: "center", color: "#b69767", fontWeight: "700", fontSize: isMobile ? "9px" : isCompact ? "8px" : "inherit" }}مراكز</th>
+                    <th style={{ padding: isMobile ? "5px" : isCompact ? "4px" : "8px", textAlign: "center", color: "#b69767", fontWeight: "700", fontSize: isMobile ? "9px" : isCompact ? "8px" : "inherit" }}>مراكز</th>
                     <th style={{ padding: isMobile ? "5px" : isCompact ? "4px" : "8px", textAlign: "center", color: "#b69767", fontWeight: "700", fontSize: isMobile ? "9px" : isCompact ? "8px" : "inherit" }}>الفجوة</th>
                   </tr>
                 </thead>
@@ -238,10 +238,10 @@ const MapPage = () => {
             <div style={{ direction: "rtl", textAlign: "center", position: "relative", overflow: "hidden" }}>
               <svg
                 width="100%"
-                height={isMobile ? 120 : isCompact ? 200 : 350}
+                height={isMobile ? 100 : isCompact ? 150 : 350}
                 viewBox="0 0 900 350"
                 style={{
-                  minHeight: isMobile ? "120px" : isCompact ? "200px" : "350px",
+                  minHeight: isMobile ? "100px" : isCompact ? "150px" : "350px",
                   backgroundColor: theme === "dark" ? "#1a1a1a" : "#fafafa",
                   borderRadius: "6px",
                   transition: "all 0.3s ease"
@@ -282,7 +282,7 @@ const MapPage = () => {
                       x="-5"
                       y={308 - (i * 50)}
                       textAnchor="end"
-                      fontSize={isMobile ? "10" : isCompact ? "11" : "14"}
+                      fontSize={isMobile ? "8" : isCompact ? "9" : "14"}
                       fontWeight="700"
                       fill="#b69767"
                     >
@@ -298,7 +298,7 @@ const MapPage = () => {
                     x={70 + i * 130}
                     y="320"
                     textAnchor="middle"
-                    fontSize={isMobile ? "9" : isCompact ? "10" : "12"}
+                    fontSize={isMobile ? "8" : isCompact ? "9" : "12"}
                     fontWeight="600"
                     fill={theme === "dark" ? "#ddd" : "#333"}
                   >
@@ -399,20 +399,20 @@ const MapPage = () => {
             <div style={{
               display: "flex",
               justifyContent: "center",
-              gap: isMobile ? "10px" : isCompact ? "8px" : "15px",
-              marginTop: isMobile ? "8px" : isCompact ? "6px" : "12px",
-              padding: isMobile ? "6px" : isCompact ? "5px" : "8px",
+              gap: isMobile ? "8px" : isCompact ? "6px" : "15px",
+              marginTop: isMobile ? "6px" : isCompact ? "4px" : "12px",
+              padding: isMobile ? "4px" : isCompact ? "4px" : "8px",
               backgroundColor: theme === "dark" ? "#1a1a1a" : "#f5f5f5",
               borderRadius: "4px",
               flexWrap: "wrap"
             }}>
-              <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "5px" : isCompact ? "4px" : "8px", direction: "rtl" }}>
-                <div style={{ width: isMobile ? "12px" : isCompact ? "10px" : "20px", height: "2px", backgroundColor: "#e74c3c" }} />
-                <span style={{ fontSize: isMobile ? "9px" : isCompact ? "9px" : "16px", fontWeight: "700", whiteSpace: "nowrap" }}>السكان</span>
+              <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "4px" : isCompact ? "3px" : "8px", direction: "rtl" }}>
+                <div style={{ width: isMobile ? "10px" : isCompact ? "8px" : "20px", height: "2px", backgroundColor: "#e74c3c" }} />
+                <span style={{ fontSize: isMobile ? "8px" : isCompact ? "8px" : "16px", fontWeight: "700", whiteSpace: "nowrap" }}>السكان</span>
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "5px" : isCompact ? "4px" : "8px", direction: "rtl" }}>
-                <div style={{ width: isMobile ? "12px" : isCompact ? "10px" : "20px", height: "2px", backgroundColor: "#27ae60" }} />
-                <span style={{ fontSize: isMobile ? "9px" : isCompact ? "9px" : "16px", fontWeight: "700", whiteSpace: "nowrap" }}>الزيادة</span>
+              <div style={{ display: "flex", alignItems: "center", gap: isMobile ? "4px" : isCompact ? "3px" : "8px", direction: "rtl" }}>
+                <div style={{ width: isMobile ? "10px" : isCompact ? "8px" : "20px", height: "2px", backgroundColor: "#27ae60" }} />
+                <span style={{ fontSize: isMobile ? "8px" : isCompact ? "8px" : "16px", fontWeight: "700", whiteSpace: "nowrap" }}>الزيادة</span>
               </div>
             </div>
           </div>
