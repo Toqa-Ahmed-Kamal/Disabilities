@@ -59,12 +59,12 @@
 
 .vision-box:hover {
   transform: translateX(-15px);
-  width: 370px; /* حركة توسيع بسيطة عند الهوفر */
+  width: 370px; 
 }
 
 .vision-title {
-  font-size: 2.8rem; /* كبرت الخط حاجة بسيطة */
-  font-weight: 800;
+  font-size: 2.1rem; /* كبرت الخط حاجة بسيطة */
+  font-weight: 500;
   line-height: 1.1;
   margin: 0;
   font-family: "Alexandria", sans-serif;

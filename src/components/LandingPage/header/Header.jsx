@@ -40,6 +40,9 @@ const Header = () => {
           <a onClick={() => { navigate("/map-page"); setMenuOpen(false); }}>
         خريطة المدينة المنورة
           </a>
+          <a onClick={() => { navigate("#"); setMenuOpen(false); }}>
+     قريبا خارطة منطقة الشرقية 
+          </a>
           <a onClick={() => { navigate("/contact"); setMenuOpen(false); }}>
             تواصل معنا
           </a>
