@@ -10,7 +10,7 @@ const HeroSection = () => {
       <div className="vision-container">
         <div className="vision-box" onClick={() => navigate("/map")}>
           <h3 className="vision-title">
-            روية المبادرة:<br/>
+           
              المحرك التحليلي <br/>
              المبتكر لبيانات الإعاقة
           </h3>
