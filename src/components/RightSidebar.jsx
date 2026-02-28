@@ -1,10 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { PieChart } from "./charts/PieChart";
 
-function RightSidebar({ mapRef, onZoom, onZoomAll, onRockyZoneZoom, theme }) {
+const INDICATOR_FIELDS = [
+  "عدد الذكور - طيف التوحد",
+  "عدد الذكور - متلازمة داون",
+  "الذكور - إعاقة بصرية_Count",
+  "الذكور - إعاقة سمعية_Count",
+  "الذكور - إعاقة حركية_Count",
+  "الذكور - فرط الحركة وتشتت الانتباه_Count",
+  "عدد الإناث - طيف التوحد",
+  "عدد الإناث - متلازمة داون",
+  "الإناث - إعاقة بصرية_Count",
+  "الإناث - إعاقة سمعية_Count",
+  "الإناث - إعاقة حركية_Count",
+  "الإناث - فرط الحركة وتشتت الانتباه_Count"
+];
+
+const ADMIN_ZONES_ORDER = [
+  "منطقة الرياض",
+  "منطقة مكة المكرمة",
+  "منطقة المدينة المنورة",
+  "منطقة القصيم",
+  "المنطقة الشرقية",
+  "منطقة عسير",
+  "منطقة تبوك",
+  "منطقة حائل",
+  "منطقة الحدود الشمالية",
+  "منطقة جازان",
+  "منطقة نجران",
+  "منطقة الجوف"
+];
+
+const formatIndicatorLabel = (indicator) =>
+  indicator
+    .replace(/Count/g, "عدد")
+    .replace(/_/g, " ");
+
+function RightSidebar({ mapRef, onZoom, onZoomAll, onRockyZoneZoom, onIndicatorLayerToggle, theme }) {
   const [selectedCritical, setSelectedCritical] = useState("all");
   const [showAll, setShowAll] = useState(true);
   const [selectedRockyZones, setSelectedRockyZones] = useState([]);
+  const [selectedIndicators, setSelectedIndicators] = useState(() =>
+    INDICATOR_FIELDS.reduce((acc, indicator) => ({ ...acc, [indicator]: false }), {})
+  );
+  const [showAllIndicators, setShowAllIndicators] = useState(false);
   const [rockyZones, setRockyZones] = useState([]);
   const [layersVisibility, setLayersVisibility] = useState({
     area: true,
@@ -53,12 +92,20 @@ function RightSidebar({ mapRef, onZoom, onZoomAll, onRockyZoneZoom, theme }) {
         const data = await response.json();
         
         if (data.features && Array.isArray(data.features)) {
-          const zones = data.features.map((feature) => ({
-            display: feature.properties['bdata.Name_Ar'] || feature.properties['Name_Ar'] || 'بلا اسم',
-            value: feature.properties['bdata.Name_Ar'] || feature.properties['Name_Ar'] || 'unknown'
-          }));
-          console.log('Loaded zones:', zones);
-          setRockyZones(zones);
+          const zoneSet = new Set(
+            data.features
+              .map((feature) => feature.properties['bdata.Name_Ar'] || feature.properties['Name_Ar'])
+              .filter(Boolean)
+          );
+
+          const orderedZones = ADMIN_ZONES_ORDER
+            .filter((zoneName) => zoneSet.has(zoneName))
+            .map((zoneName) => ({
+              display: zoneName,
+              value: zoneName
+            }));
+
+          setRockyZones(orderedZones);
         }
       } catch (error) {
         console.error("Error fetching rocky zones:", error);
@@ -113,6 +160,45 @@ function RightSidebar({ mapRef, onZoom, onZoomAll, onRockyZoneZoom, theme }) {
     }
   };
 
+  const handleIndicatorToggle = (indicatorName) => {
+    setSelectedIndicators((prev) => {
+      const updated = {
+        ...prev,
+        [indicatorName]: !prev[indicatorName],
+      };
+
+      const isAllChecked = INDICATOR_FIELDS.every((indicator) => updated[indicator]);
+      setShowAllIndicators(isAllChecked);
+      return updated;
+    });
+
+    if (onIndicatorLayerToggle) {
+      onIndicatorLayerToggle(indicatorName);
+    }
+  };
+
+  const handleShowAllIndicatorsChange = () => {
+    const newShowAllIndicators = !showAllIndicators;
+    setShowAllIndicators(newShowAllIndicators);
+
+    setSelectedIndicators((prev) => {
+      const updated = { ...prev };
+
+      INDICATOR_FIELDS.forEach((indicator) => {
+        const shouldBeChecked = newShowAllIndicators;
+        const isCurrentlyChecked = !!prev[indicator];
+
+        updated[indicator] = shouldBeChecked;
+
+        if (shouldBeChecked !== isCurrentlyChecked && onIndicatorLayerToggle) {
+          onIndicatorLayerToggle(indicator);
+        }
+      });
+
+      return updated;
+    });
+  };
+
   return (
     <div
       style={{
@@ -127,7 +213,7 @@ function RightSidebar({ mapRef, onZoom, onZoomAll, onRockyZoneZoom, theme }) {
       <div style={{ marginBottom: "20px" }}>
      
         <div style={filterCard}>
-          <label style={labelStyle}>المناطق الادارية</label>
+          <label style={{ ...labelStyle, textAlign: "center" }}>المناطق الادارية</label>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {/* الكل checkbox */}
             <label
@@ -184,6 +270,63 @@ function RightSidebar({ mapRef, onZoom, onZoomAll, onRockyZoneZoom, theme }) {
             ))}
           </div>
         </div>
+
+        <div style={filterCard}>
+          <label style={{ ...labelStyle, textAlign: "center" }}>طبقات الإعاقة</label>
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            <label
+              style={{
+                display: "flex",
+                flexDirection: "row-reverse",
+                alignItems: "center",
+                gap: 8,
+                cursor: "pointer",
+                fontSize: "13px",
+                fontWeight: 600,
+                paddingBottom: "8px",
+                borderBottom: theme === "dark" ? "1px solid rgba(255,255,255,0.1)" : "1px solid #dcdcdc",
+                textAlign: "right"
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={showAllIndicators}
+                onChange={handleShowAllIndicatorsChange}
+                style={{
+                  accentColor: theme === "dark" ? "#4da3ff" : "#007bff",
+                  cursor: "pointer"
+                }}
+              />
+              الكل
+            </label>
+
+            {INDICATOR_FIELDS.map((indicator) => (
+              <label
+                key={indicator}
+                style={{
+                  display: "flex",
+                  flexDirection: "row-reverse",
+                  alignItems: "center",
+                  gap: 8,
+                  cursor: "pointer",
+                  fontSize: "13px",
+                  textAlign: "right"
+                }}
+              >
+                <input
+                  type="checkbox"
+                  checked={!!selectedIndicators[indicator]}
+                  onChange={() => handleIndicatorToggle(indicator)}
+                  style={{
+                    accentColor: theme === "dark" ? "#4da3ff" : "#007bff",
+                    cursor: "pointer"
+                  }}
+                />
+                {formatIndicatorLabel(indicator)}
+              </label>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Legend */}
@@ -191,7 +334,7 @@ function RightSidebar({ mapRef, onZoom, onZoomAll, onRockyZoneZoom, theme }) {
       </div>
 
       {/* Statistics Pie Chart */}
-      <div style={{ 
+      {/* <div style={{ 
         marginTop: 12, 
         padding: 10, 
         background: "transparent", 
@@ -252,7 +395,7 @@ function RightSidebar({ mapRef, onZoom, onZoomAll, onRockyZoneZoom, theme }) {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

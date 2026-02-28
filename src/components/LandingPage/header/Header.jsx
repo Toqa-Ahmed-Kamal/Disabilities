@@ -38,7 +38,10 @@ const Header = () => {
             لوحة التحكم
           </a>
           <a onClick={() => { navigate("/map-page"); setMenuOpen(false); }}>
-        خريطة المدينة المنورة
+        خريطة المدينة المنورة 2020
+          </a>
+          <a onClick={() => { navigate("/map-page2"); setMenuOpen(false); }}>
+        خريطة المدينة المنورة 2024
           </a>
           <a onClick={() => { navigate("#"); setMenuOpen(false); }}>
      قريبا خارطة منطقة الشرقية 

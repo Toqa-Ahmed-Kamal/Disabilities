@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { MapContainer, TileLayer, Marker, Popup, GeoJSON, useMap } from "react-leaflet";
@@ -6,6 +6,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import CareCentersData from "./Carecenters.json";
 import AlMadinahData from "../../Al-Madinah.json";
+import AlMadinahAfterData from "../../AlMadinah_After.json";
 
 // Fix default marker icon
 import markerIcon from "leaflet/dist/images/marker-icon.png";
@@ -26,6 +27,131 @@ const careCenterIcon = new L.Icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
 });
+
+const AFTER_CARE_CENTER_FIELD = "بعد_مبادرة_الرعاية_مركز_الرعاية_النهارية";
+const AFTER_ASSOCIATION_FIELD = "بعد_مبادرة_الرعاية_جمعية_ذوي_الإعاقة";
+
+const afterCareCenterIcon = L.divIcon({
+  className: "",
+  html: '<div style="width:16px;height:16px;background:#1f78ff;border:2px solid #ffffff;border-radius:4px;box-shadow:0 0 0 1px rgba(0,0,0,0.2);"></div>',
+  iconSize: [16, 16],
+  iconAnchor: [8, 8],
+});
+
+const afterAssociationIcon = L.divIcon({
+  className: "",
+  html: '<div style="width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;border-bottom:16px solid #8e44ad;filter:drop-shadow(0 0 1px rgba(0,0,0,0.5));"></div>',
+  iconSize: [18, 16],
+  iconAnchor: [9, 14],
+});
+
+const pointInRing = (point, ring) => {
+  const [x, y] = point;
+  let inside = false;
+
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const xi = ring[i][0];
+    const yi = ring[i][1];
+    const xj = ring[j][0];
+    const yj = ring[j][1];
+
+    const intersect =
+      yi > y !== yj > y &&
+      x < ((xj - xi) * (y - yi)) / ((yj - yi) || Number.EPSILON) + xi;
+
+    if (intersect) inside = !inside;
+  }
+
+  return inside;
+};
+
+const pointInPolygonRings = (point, rings) => {
+  if (!rings || rings.length === 0) return false;
+  if (!pointInRing(point, rings[0])) return false;
+
+  for (let i = 1; i < rings.length; i += 1) {
+    if (pointInRing(point, rings[i])) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+const getRingBounds = (ring) => {
+  const bounds = {
+    minX: Infinity,
+    minY: Infinity,
+    maxX: -Infinity,
+    maxY: -Infinity,
+  };
+
+  ring.forEach(([lng, lat]) => {
+    if (lng < bounds.minX) bounds.minX = lng;
+    if (lng > bounds.maxX) bounds.maxX = lng;
+    if (lat < bounds.minY) bounds.minY = lat;
+    if (lat > bounds.maxY) bounds.maxY = lat;
+  });
+
+  return bounds;
+};
+
+const randomPointInPolygonRings = (rings) => {
+  if (!rings || rings.length === 0 || !rings[0] || rings[0].length < 3) return null;
+
+  const bounds = getRingBounds(rings[0]);
+
+  for (let i = 0; i < 600; i += 1) {
+    const lng = bounds.minX + Math.random() * (bounds.maxX - bounds.minX);
+    const lat = bounds.minY + Math.random() * (bounds.maxY - bounds.minY);
+    if (pointInPolygonRings([lng, lat], rings)) {
+      return [lat, lng];
+    }
+  }
+
+  return null;
+};
+
+const generateAfterInitiativePoints = (esriData) => {
+  if (!esriData?.features || !Array.isArray(esriData.features)) return [];
+
+  const points = [];
+
+  esriData.features.forEach((feature, featureIndex) => {
+    const attrs = feature?.attributes || {};
+    const rings = feature?.geometry?.rings;
+    if (!rings || rings.length === 0) return;
+
+    const regionName = attrs.Name_ar || attrs.Arabie_saoudite_Muhafazat_Boundaries_Name_ar || "منطقة";
+
+    const careCenterCount = Math.max(0, Math.floor(Number(attrs[AFTER_CARE_CENTER_FIELD]) || 0));
+    const associationCount = Math.max(0, Math.floor(Number(attrs[AFTER_ASSOCIATION_FIELD]) || 0));
+
+    for (let i = 0; i < careCenterCount; i += 1) {
+      const position = randomPointInPolygonRings(rings);
+      if (!position) continue;
+      points.push({
+        id: `after-care-center-${featureIndex}-${i}`,
+        position,
+        type: AFTER_CARE_CENTER_FIELD,
+        regionName,
+      });
+    }
+
+    for (let i = 0; i < associationCount; i += 1) {
+      const position = randomPointInPolygonRings(rings);
+      if (!position) continue;
+      points.push({
+        id: `after-association-${featureIndex}-${i}`,
+        position,
+        type: AFTER_ASSOCIATION_FIELD,
+        regionName,
+      });
+    }
+  });
+
+  return points;
+};
 
 // Component to handle map zoom
 const MapZoomController = ({ selectedCenter, markersRef }) => {
@@ -51,6 +177,10 @@ const MapPage = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [isCompact, setIsCompact] = useState(window.innerWidth <= 1366);
   const markersRef = useRef({});
+  const afterInitiativePoints = useMemo(
+    () => generateAfterInitiativePoints(AlMadinahAfterData),
+    []
+  );
 
   useEffect(() => {
     const handleResize = () => {
@@ -149,7 +279,7 @@ const MapPage = () => {
           ← {isMobile ? "رجوع" : "الرجوع"}
         </button>
         <h1 style={{ color: theme === "dark" ? "#fff" : "#000", margin: 0, fontSize: isMobile ? "14px" : isCompact ? "15px" : "18px" }}>
-           خريطة المدينة المنورة 2020 
+           خريطة المدينة المنورة 2024
 
         </h1>
         <div style={{ width: isMobile ? "50px" : "80px" }}></div>
@@ -478,6 +608,28 @@ const MapPage = () => {
                 </Marker>
               );
             })}
+
+            {/* نقاط جديدة بعد المبادرة من AlMadinah_After.json */}
+            {afterInitiativePoints.map((point) => (
+              <Marker
+                key={point.id}
+                position={point.position}
+                icon={point.type === AFTER_CARE_CENTER_FIELD ? afterCareCenterIcon : afterAssociationIcon}
+              >
+                <Popup>
+                  <div
+                    style={{ textAlign: "right", direction: "rtl", backgroundColor: "#ffffff", padding: "10px" }}
+                    dangerouslySetInnerHTML={{
+                      __html: `
+                        <p style="margin: 0 0 8px 0; font-size: 13px; text-align: right;"><strong style="color: #b69767 !important; font-weight: 700;">${point.regionName}</strong></p>
+                        <p style="margin: 0 0 6px 0; font-size: 13px; text-align: right;"><strong style="color: #b69767 !important; font-weight: 700;">تم زياده مركز نتيجه للمبادره</strong></p>
+                        <p style="margin: 0; font-size: 9px; text-align: right;"><span style="color: #b69767 !important; font-weight: 700;">ملحوظه: الاحداثيات للمراكز الجديده غير دقيقه</span></p>
+                      `,
+                    }}
+                  />
+                </Popup>
+              </Marker>
+            ))}
           </MapContainer>
         </div>
 

@@ -26,6 +26,28 @@
   width: 100%;
 }
 
+/* Short-height laptops/screens */
+@media (max-height: 760px) {
+  .map-view-top {
+    flex: 0 0 calc(100% - 220px);
+  }
+
+  .map-view-bottom {
+    flex: 0 0 220px;
+  }
+}
+
+/* Very short screens */
+@media (max-height: 680px) {
+  .map-view-top {
+    flex: 0 0 calc(100% - 180px);
+  }
+
+  .map-view-bottom {
+    flex: 0 0 180px;
+  }
+}
+
 /* Tablet and smaller screens */
 @media (max-width: 1024px) {
   .map-view-top {

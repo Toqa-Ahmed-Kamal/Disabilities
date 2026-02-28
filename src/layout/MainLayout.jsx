@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import Navbar from "../components/Navbar";
 import MapView from "../components/MapView";
@@ -11,8 +12,21 @@ function MainLayout() {
   const [showLeft] = useState(true);
   const [showRight] = useState(true);
   const [selectedStationData, setSelectedStationData] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isCompact, setIsCompact] = useState(window.innerWidth <= 1366);
   const mapRef = useRef(null);
+  const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+      setIsCompact(window.innerWidth <= 1366);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <div style={{ 
@@ -38,6 +52,27 @@ function MainLayout() {
           paddingRight: showRight ? 260 : 0,
         }}
       >
+        <button
+          onClick={() => navigate("/")}
+          style={{
+            position: "absolute",
+            top: isMobile ? 10 : 12,
+            right: showRight ? 270 : 12,
+            zIndex: 40,
+            padding: isMobile ? "8px 12px" : isCompact ? "8px 14px" : "10px 20px",
+            backgroundColor: "#b69767",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            fontSize: isMobile ? "12px" : isCompact ? "12px" : "14px",
+            minWidth: "auto",
+            whiteSpace: "nowrap",
+          }}
+        >
+          ← {isMobile ? "رجوع" : "الرجوع"}
+        </button>
+
         {/* Map */}
         <MapView 
           ref={mapRef} 
@@ -88,6 +123,11 @@ function MainLayout() {
               mapRef={mapRef}
               onZoom={(name) => mapRef.current && mapRef.current.zoomToFeatureByName && mapRef.current.zoomToFeatureByName(name)}
               onZoomAll={() => mapRef.current && mapRef.current.fitToAll && mapRef.current.fitToAll()}
+              onIndicatorLayerToggle={(indicatorName) => {
+                if (mapRef.current && mapRef.current.toggleIndicatorLayer) {
+                  mapRef.current.toggleIndicatorLayer(indicatorName);
+                }
+              }}
               onRockyZoneZoom={(zones, showAll) => {
                 console.log('onRockyZoneZoom called:', zones, 'showAll:', showAll);
                 if (mapRef.current) {
